@@ -1,0 +1,25 @@
+# 빌드/배포
+*.zip
+*.crx
+*.pem
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Claude Code
+.claude/
+
+# Node (필요시)
+node_modules/
+
+# 로그
+*.log
+
+pomodoro-timer.zip
