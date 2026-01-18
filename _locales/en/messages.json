@@ -1,0 +1,67 @@
+{
+  "extName": { "message": "Pomodoro Timer" },
+  "extDescription": { "message": "A Pomodoro timer extension for managing work and break sessions" },
+  "work": { "message": "Work" },
+  "shortBreak": { "message": "Short Break" },
+  "longBreak": { "message": "Long Break" },
+  "start": { "message": "Start" },
+  "pause": { "message": "Pause" },
+  "reset": { "message": "Reset" },
+  "cycle": { "message": "Cycle" },
+  "cycleFormat": {
+    "message": "Cycle: $current$ / $total$",
+    "placeholders": {
+      "current": { "content": "$1" },
+      "total": { "content": "$2" }
+    }
+  },
+  "todayCompleted": { "message": "Completed Today" },
+  "cycleCount": {
+    "message": "$count$ cycles",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "totalWorkTime": { "message": "Total Work Time" },
+  "minuteFormat": {
+    "message": "$minutes$ min",
+    "placeholders": {
+      "minutes": { "content": "$1" }
+    }
+  },
+  "settings": { "message": "Settings" },
+  "workTime": { "message": "Work Time (min)" },
+  "shortBreakTime": { "message": "Short Break (min)" },
+  "longBreakTime": { "message": "Long Break (min)" },
+  "cyclesBeforeLongBreak": { "message": "Cycles Before Long Break" },
+  "soundNotification": { "message": "Sound Notification" },
+  "browserNotification": { "message": "Browser Notification" },
+  "autoStart": { "message": "Auto Start" },
+  "autoStartDesc": { "message": "Automatically start next session when timer ends" },
+  "save": { "message": "Save" },
+  "settingsSaved": { "message": "Settings saved" },
+  "donate": { "message": "Buy Me a Coffee" },
+  "keyboardHintSpace": { "message": "Space: Start/Pause" },
+  "keyboardHintReset": { "message": "R: Reset" },
+  "notifWorkEnd": { "message": "Work Session Complete!" },
+  "notifWorkEndMsg": { "message": "Time for a break." },
+  "notifShortBreakEnd": { "message": "Short Break Over!" },
+  "notifShortBreakEndMsg": { "message": "Time to get back to work." },
+  "notifLongBreakEnd": { "message": "Long Break Over!" },
+  "notifLongBreakEndMsg": { "message": "Start a new cycle." },
+  "ariaTimerModeSelect": { "message": "Timer mode selection" },
+  "ariaWorkMode": { "message": "Work mode" },
+  "ariaShortBreakMode": { "message": "Short break mode" },
+  "ariaLongBreakMode": { "message": "Long break mode" },
+  "ariaStartTimer": { "message": "Start timer" },
+  "ariaPauseTimer": { "message": "Pause timer" },
+  "ariaResetTimer": { "message": "Reset timer" },
+  "ariaOpenSettings": { "message": "Open settings" },
+  "ariaBackToMain": { "message": "Back to main screen" },
+  "ariaSaveSettings": { "message": "Save settings" },
+  "ariaTodayStats": { "message": "Today's statistics" },
+  "language": { "message": "Language" },
+  "languageAuto": { "message": "Auto (Browser setting)" },
+  "languageKo": { "message": "한국어" },
+  "languageEn": { "message": "English" }
+}

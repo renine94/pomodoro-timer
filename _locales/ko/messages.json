@@ -1,0 +1,67 @@
+{
+  "extName": { "message": "뽀모도로 타이머" },
+  "extDescription": { "message": "작업과 휴식을 관리하는 뽀모도로 타이머 확장프로그램" },
+  "work": { "message": "작업" },
+  "shortBreak": { "message": "짧은 휴식" },
+  "longBreak": { "message": "긴 휴식" },
+  "start": { "message": "시작" },
+  "pause": { "message": "일시정지" },
+  "reset": { "message": "리셋" },
+  "cycle": { "message": "사이클" },
+  "cycleFormat": {
+    "message": "사이클: $current$ / $total$",
+    "placeholders": {
+      "current": { "content": "$1" },
+      "total": { "content": "$2" }
+    }
+  },
+  "todayCompleted": { "message": "오늘 완료" },
+  "cycleCount": {
+    "message": "$count$ 사이클",
+    "placeholders": {
+      "count": { "content": "$1" }
+    }
+  },
+  "totalWorkTime": { "message": "총 작업 시간" },
+  "minuteFormat": {
+    "message": "$minutes$분",
+    "placeholders": {
+      "minutes": { "content": "$1" }
+    }
+  },
+  "settings": { "message": "설정" },
+  "workTime": { "message": "작업 시간 (분)" },
+  "shortBreakTime": { "message": "짧은 휴식 (분)" },
+  "longBreakTime": { "message": "긴 휴식 (분)" },
+  "cyclesBeforeLongBreak": { "message": "긴 휴식까지 사이클" },
+  "soundNotification": { "message": "소리 알림" },
+  "browserNotification": { "message": "브라우저 알림" },
+  "autoStart": { "message": "자동 시작" },
+  "autoStartDesc": { "message": "타이머 종료 후 자동으로 다음 모드 시작" },
+  "save": { "message": "저장" },
+  "settingsSaved": { "message": "설정이 저장되었습니다" },
+  "donate": { "message": "커피 한 잔 후원하기" },
+  "keyboardHintSpace": { "message": "Space: 시작/정지" },
+  "keyboardHintReset": { "message": "R: 리셋" },
+  "notifWorkEnd": { "message": "작업 시간 종료!" },
+  "notifWorkEndMsg": { "message": "휴식을 취하세요." },
+  "notifShortBreakEnd": { "message": "짧은 휴식 종료!" },
+  "notifShortBreakEndMsg": { "message": "다시 작업을 시작하세요." },
+  "notifLongBreakEnd": { "message": "긴 휴식 종료!" },
+  "notifLongBreakEndMsg": { "message": "새로운 사이클을 시작하세요." },
+  "ariaTimerModeSelect": { "message": "타이머 모드 선택" },
+  "ariaWorkMode": { "message": "작업 모드" },
+  "ariaShortBreakMode": { "message": "짧은 휴식 모드" },
+  "ariaLongBreakMode": { "message": "긴 휴식 모드" },
+  "ariaStartTimer": { "message": "타이머 시작" },
+  "ariaPauseTimer": { "message": "타이머 일시정지" },
+  "ariaResetTimer": { "message": "타이머 리셋" },
+  "ariaOpenSettings": { "message": "설정 열기" },
+  "ariaBackToMain": { "message": "메인 화면으로 돌아가기" },
+  "ariaSaveSettings": { "message": "설정 저장" },
+  "ariaTodayStats": { "message": "오늘의 통계" },
+  "language": { "message": "언어" },
+  "languageAuto": { "message": "자동 (브라우저 설정)" },
+  "languageKo": { "message": "한국어" },
+  "languageEn": { "message": "English" }
+}

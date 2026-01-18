@@ -1,12 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "뽀모도로 타이머",
+  "default_locale": "ko",
+  "name": "__MSG_extName__",
   "version": "1.0.0",
-  "description": "작업과 휴식을 관리하는 뽀모도로 타이머 확장프로그램",
+  "description": "__MSG_extDescription__",
   "permissions": [
     "storage",
     "alarms",
-    "notifications"
+    "notifications",
+    "offscreen"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -15,7 +17,7 @@
       "48": "icons/icon48.png",
       "128": "icons/icon128.png"
     },
-    "default_title": "뽀모도로 타이머"
+    "default_title": "__MSG_extName__"
   },
   "background": {
     "service_worker": "background.js"

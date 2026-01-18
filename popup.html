@@ -3,87 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>뽀모도로 타이머</title>
+  <title data-i18n="extName"></title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
   <div class="container" id="container">
     <!-- 메인 타이머 화면 -->
     <div class="main-screen" id="mainScreen">
-      <div class="mode-tabs">
-        <button class="mode-tab active" data-mode="work">작업</button>
-        <button class="mode-tab" data-mode="shortBreak">짧은 휴식</button>
-        <button class="mode-tab" data-mode="longBreak">긴 휴식</button>
+      <div class="mode-tabs" role="tablist" data-i18n-aria="ariaTimerModeSelect">
+        <button class="mode-tab active" data-mode="work" role="tab" aria-selected="true" data-i18n-aria="ariaWorkMode">
+          <span class="mode-icon">&#128187;</span>
+          <span data-i18n="work"></span>
+        </button>
+        <button class="mode-tab" data-mode="shortBreak" role="tab" aria-selected="false" data-i18n-aria="ariaShortBreakMode">
+          <span class="mode-icon">&#9749;</span>
+          <span data-i18n="shortBreak"></span>
+        </button>
+        <button class="mode-tab" data-mode="longBreak" role="tab" aria-selected="false" data-i18n-aria="ariaLongBreakMode">
+          <span class="mode-icon">&#127796;</span>
+          <span data-i18n="longBreak"></span>
+        </button>
       </div>
 
-      <div class="timer-display">
-        <span id="minutes">25</span>:<span id="seconds">00</span>
+      <!-- 원형 진행 바 -->
+      <div class="timer-container">
+        <svg class="progress-ring" viewBox="0 0 180 180" aria-hidden="true">
+          <circle class="progress-ring-bg" cx="90" cy="90" r="80" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="6"/>
+          <circle class="progress-ring-circle" cx="90" cy="90" r="80" fill="none" stroke="white" stroke-width="6" stroke-linecap="round" transform="rotate(-90 90 90)"/>
+        </svg>
+        <div class="timer-display" aria-live="polite" aria-atomic="true">
+          <span id="minutes">25</span>:<span id="seconds">00</span>
+        </div>
       </div>
 
-      <div class="cycle-indicator">
-        <span id="cycleText">사이클: 0 / 4</span>
+      <div class="cycle-indicator" aria-live="polite">
+        <span id="cycleText"></span>
       </div>
 
       <div class="controls">
-        <button class="btn btn-primary" id="startBtn">시작</button>
-        <button class="btn btn-secondary" id="resetBtn">리셋</button>
+        <button class="btn btn-primary" id="startBtn" data-i18n-aria="ariaStartTimer" data-i18n="start"></button>
+        <button class="btn btn-secondary" id="resetBtn" data-i18n-aria="ariaResetTimer" data-i18n="reset"></button>
       </div>
 
-      <button class="settings-btn" id="settingsBtn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <!-- 세션 통계 -->
+      <div class="statistics" data-i18n-aria="ariaTodayStats">
+        <div class="stat-item">
+          <span class="stat-label" data-i18n="todayCompleted"></span>
+          <span class="stat-value" id="todayCycles"></span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-label" data-i18n="totalWorkTime"></span>
+          <span class="stat-value" id="todayMinutes"></span>
+        </div>
+      </div>
+
+      <button class="settings-btn" id="settingsBtn" data-i18n-aria="ariaOpenSettings">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <circle cx="12" cy="12" r="3"></circle>
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
         </svg>
       </button>
+
+      <!-- 단축키 안내 -->
+      <div class="keyboard-hint" aria-hidden="true">
+        <span data-i18n="keyboardHintSpace"></span>
+        <span data-i18n="keyboardHintReset"></span>
+      </div>
     </div>
 
     <!-- 설정 화면 -->
     <div class="settings-screen hidden" id="settingsScreen">
       <div class="settings-header">
-        <button class="back-btn" id="backBtn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <button class="back-btn" id="backBtn" data-i18n-aria="ariaBackToMain">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M19 12H5M12 19l-7-7 7-7"></path>
           </svg>
         </button>
-        <h2>설정</h2>
+        <h2 data-i18n="settings"></h2>
       </div>
 
       <div class="settings-content">
         <div class="setting-item">
-          <label for="workTime">작업 시간 (분)</label>
-          <input type="number" id="workTime" min="1" max="60" value="25">
+          <label for="languageSelect" data-i18n="language"></label>
+          <select id="languageSelect">
+            <option value="auto" data-i18n="languageAuto"></option>
+            <option value="ko" data-i18n="languageKo"></option>
+            <option value="en" data-i18n="languageEn"></option>
+          </select>
         </div>
 
         <div class="setting-item">
-          <label for="shortBreak">짧은 휴식 (분)</label>
+          <label for="workTime" data-i18n="workTime"></label>
+          <input type="number" id="workTime" min="1" max="60" value="25" aria-describedby="workTimeDesc">
+        </div>
+
+        <div class="setting-item">
+          <label for="shortBreak" data-i18n="shortBreakTime"></label>
           <input type="number" id="shortBreak" min="1" max="30" value="5">
         </div>
 
         <div class="setting-item">
-          <label for="longBreak">긴 휴식 (분)</label>
+          <label for="longBreak" data-i18n="longBreakTime"></label>
           <input type="number" id="longBreak" min="1" max="60" value="15">
         </div>
 
         <div class="setting-item">
-          <label for="cycles">긴 휴식까지 사이클</label>
+          <label for="cycles" data-i18n="cyclesBeforeLongBreak"></label>
           <input type="number" id="cycles" min="1" max="10" value="4">
         </div>
 
         <div class="setting-item toggle">
-          <label for="soundEnabled">소리 알림</label>
-          <input type="checkbox" id="soundEnabled" checked>
+          <label for="soundEnabled" data-i18n="soundNotification"></label>
+          <input type="checkbox" id="soundEnabled" checked aria-describedby="soundDesc">
         </div>
 
         <div class="setting-item toggle">
-          <label for="notificationEnabled">브라우저 알림</label>
+          <label for="notificationEnabled" data-i18n="browserNotification"></label>
           <input type="checkbox" id="notificationEnabled" checked>
+        </div>
+
+        <div class="setting-item toggle">
+          <label for="autoStartEnabled" data-i18n="autoStart"></label>
+          <input type="checkbox" id="autoStartEnabled" aria-describedby="autoStartDesc">
+          <span class="setting-desc" id="autoStartDesc" data-i18n="autoStartDesc"></span>
         </div>
       </div>
 
-      <button class="btn btn-primary save-btn" id="saveBtn">저장</button>
+      <button class="btn btn-primary save-btn" id="saveBtn" data-i18n-aria="ariaSaveSettings" data-i18n="save"></button>
+
+      <a href="https://buymeacoffee.com/renine94"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="donate-btn">
+        <span class="donate-icon">&#9749;</span>
+        <span data-i18n="donate"></span>
+      </a>
     </div>
+
+    <!-- 토스트 메시지 -->
+    <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
   </div>
 
+  <script src="i18n.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
