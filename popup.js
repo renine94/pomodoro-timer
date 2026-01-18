@@ -40,6 +40,8 @@ const CIRCLE_CIRCUMFERENCE = 2 * Math.PI * 80; // 502.65
 
 // 초기화
 document.addEventListener('DOMContentLoaded', async () => {
+  // I18n 초기화 완료 대기
+  await I18n.init();
   await getState();
   await loadSettings();
   setupEventListeners();
@@ -388,5 +390,3 @@ async function playNotificationSound() {
   }
 }
 
-// 페이지 로드 시 초기 상태 설정
-getState();

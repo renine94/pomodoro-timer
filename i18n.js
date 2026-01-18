@@ -5,9 +5,12 @@ const I18n = {
   currentLocale: null,
   supportedLocales: ['ko', 'en'],
   defaultLocale: 'ko',
+  initialized: false,
 
   // 초기화
   async init() {
+    // 이미 초기화되었으면 건너뛰기
+    if (this.initialized) return;
     // 저장된 언어 설정 불러오기
     const result = await chrome.storage.local.get(['language']);
 
@@ -26,6 +29,8 @@ const I18n = {
 
     // DOM에 적용
     this.applyI18n();
+
+    this.initialized = true;
   },
 
   // 메시지 파일 로드

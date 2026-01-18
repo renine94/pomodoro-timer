@@ -91,6 +91,12 @@ function startTimer() {
   timerState.isRunning = true;
   saveStateImmediate();
 
+  // 기존 interval 정리 (중복 실행 방지)
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
   // setInterval 사용 (1초마다)
   timerInterval = setInterval(() => {
     timerTick();
@@ -112,14 +118,18 @@ function timerTick() {
   }
 
   if (timerState.timeRemaining <= 0) {
-    showNotification();
+    // 모드 변경 전에 현재 모드 저장
+    const completedMode = timerState.mode;
 
     // 작업 모드 완료 시 통계 업데이트
-    if (timerState.mode === 'work') {
+    if (completedMode === 'work') {
       statistics.todayCompletedCycles++;
     }
 
     switchMode();
+
+    // 알림은 완료된 모드 기준으로 표시
+    showNotification(completedMode);
 
     // 팝업에 타이머 완료 알림
     chrome.runtime.sendMessage({
@@ -240,7 +250,7 @@ function setMode(mode) {
 }
 
 // 알림 표시
-async function showNotification() {
+async function showNotification(completedMode) {
   // 소리 재생 (offscreen document 사용)
   if (timerState.settings.soundEnabled) {
     await playSound();
@@ -251,7 +261,7 @@ async function showNotification() {
 
   let title, message;
 
-  switch (timerState.mode) {
+  switch (completedMode) {
     case 'work':
       title = chrome.i18n.getMessage('notifWorkEnd');
       message = chrome.i18n.getMessage('notifWorkEndMsg');
@@ -368,4 +378,22 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 // 초기화
-loadSettings();
+async function init() {
+  await loadSettings();
+
+  // 서비스 워커 재시작 시 타이머가 실행 중이었다면 interval 복원
+  if (timerState.isRunning) {
+    // 기존 interval 정리
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+
+    timerInterval = setInterval(() => {
+      timerTick();
+    }, 1000);
+
+    keepAlive();
+  }
+}
+
+init();
