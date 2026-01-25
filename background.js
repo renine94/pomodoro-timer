@@ -89,6 +89,7 @@ function startTimer() {
   if (timerState.isRunning) return;
 
   timerState.isRunning = true;
+  updateBadge();
   saveStateImmediate();
 
   // 기존 interval 정리 (중복 실행 방지)
@@ -111,6 +112,7 @@ function timerTick() {
   if (!timerState.isRunning) return;
 
   timerState.timeRemaining--;
+  updateBadge();
 
   // 작업 모드일 때 작업 시간 통계 업데이트
   if (timerState.mode === 'work') {
@@ -168,6 +170,7 @@ function pauseTimer() {
     clearInterval(timerInterval);
     timerInterval = null;
   }
+  updateBadge();
   saveStateImmediate();
 }
 
@@ -180,7 +183,41 @@ function resetTimer() {
   }
   timerState.timeRemaining = getModeTime(timerState.mode);
   timerState.totalTime = getModeTime(timerState.mode);
+  updateBadge();
   saveStateImmediate();
+}
+
+// 배지 업데이트
+function updateBadge() {
+  if (!timerState.isRunning && timerState.timeRemaining === getModeTime(timerState.mode)) {
+    // 초기 상태 - 배지 숨김
+    chrome.action.setBadgeText({ text: '' });
+    return;
+  }
+
+  const minutes = Math.floor(timerState.timeRemaining / 60);
+  const seconds = timerState.timeRemaining % 60;
+
+  // 배지 텍스트 (짧게 표시하여 글자 크기 최대화)
+  let text;
+  if (minutes > 0) {
+    text = `${minutes}`;  // 예: "25", "4"
+  } else {
+    text = `:${seconds.toString().padStart(2, '0')}`;  // 예: ":30", ":05"
+  }
+
+  chrome.action.setBadgeText({ text });
+
+  // 텍스트 색상 (하얀색)
+  chrome.action.setBadgeTextColor({ color: '#FFFFFF' });
+
+  // 모드별 배경색
+  const colors = {
+    work: '#e74c3c',      // 빨강 (작업)
+    shortBreak: '#27ae60', // 초록 (짧은 휴식)
+    longBreak: '#3498db'   // 파랑 (긴 휴식)
+  };
+  chrome.action.setBadgeBackgroundColor({ color: colors[timerState.mode] });
 }
 
 // 모드에 따른 시간 반환
@@ -233,6 +270,7 @@ function switchMode() {
     }
   }
 
+  updateBadge();
   saveStateImmediate();
 }
 
@@ -246,6 +284,7 @@ function setMode(mode) {
     clearInterval(timerInterval);
     timerInterval = null;
   }
+  updateBadge();
   saveStateImmediate();
 }
 
@@ -394,6 +433,9 @@ async function init() {
 
     keepAlive();
   }
+
+  // 초기 배지 상태 설정
+  updateBadge();
 }
 
 init();
